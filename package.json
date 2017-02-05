@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "muse-ui": "^2.0.0-rc.5",
-    "vue": "^2.1.0"
+    "vue": "^2.1.0",
+    "vue-resource": "^1.2.0",
+    "vue-router": "^2.2.0",
+    "vuex": "^2.1.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
@@ -36,6 +39,12 @@
     "opn": "^4.0.2",
     "ora": "^0.3.0",
     "shelljs": "^0.7.4",
+    "lodash": "^4.15.0",
+    "node-sass": "^3.11.2",
+    "postcss-loader": "^1.1.1",
+    "sass-loader": "^4.0.2",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
     "url-loader": "^0.5.7",
     "vue-loader": "^10.0.0",
     "vue-style-loader": "^1.0.0",
