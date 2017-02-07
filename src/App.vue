@@ -56,6 +56,7 @@ export default {
     },
     setTitle () {
       let path = window.location.hash
+      console.log(path)
       if (path && path.length > 1) path = path.substring(1)
       for (let i = 0; i < this.routes.length; i++) {
         var route = this.routes[i]
