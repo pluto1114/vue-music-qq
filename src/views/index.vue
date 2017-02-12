@@ -17,20 +17,39 @@
 	      </div>
 	      <div class="mu-banner-appbar-height"></div>
 	    </div>
-	    <div class="content-wrapper">
-	      {{msg}}
-	    </div>
+	    <mu-content-block>
+      <mu-list>
+        <mu-list-item :title="x.songName" v-for="(x,index) of hotSongArr" @click="handleSelect(x.musicData.songmid)">
+           <mu-badge :content="(index+1)+''" circle slot="left"/>
+           <span slot="after">{{x.singerName}}</span>
+        </mu-list-item>
+        <mu-divider />
+      </mu-list>
+  		</mu-content-block>
     </div>
 </template>
 
 <script>
+import {search,fetchTopList,fetchHotList} from '../store/api'
 export default {
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      hotSongArr:[]
+    }
+  },
+  mounted(){
+  	console.log(hot_all)
+    this.hotSongArr=hot_all.songlist;
+  },
+  methods:{
+    handleSelect(mid){
+      console.log(mid)
+      this.$router.push("/player/"+mid);
     }
   }
 }
+
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

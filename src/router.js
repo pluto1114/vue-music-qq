@@ -8,7 +8,7 @@ const router = new VueRouter({
   routes: [
     // { path: '/' },
     { path: '/index',component:require('./views/index')},
-    // { path: '/songs/:word', component: require('./views/Songs') },
+    { path: '/player/:mid', component: require('./views/player') },
     // { path: '/song/:id', component:require('./views/Song') },   
     { path: '*', redirect: '/index' }
   ]

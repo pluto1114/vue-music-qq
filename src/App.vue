@@ -13,6 +13,7 @@
 
 <script>
 import appSide from './components/AppSide'
+
 export default {
   data () {
     const desktop = isDesktop()
@@ -34,6 +35,8 @@ export default {
     window.addEventListener('hashchange', () => {
       this.setTitle()
     })
+
+    
   },
   methods: {
     toggleNav () {
