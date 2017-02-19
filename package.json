@@ -9,6 +9,9 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "base64-decode-utils": "0.0.2",
+    "js-base64": "^2.1.9",
+    "keycode": "^2.1.7",
     "muse-ui": "^2.0.0-rc.5",
     "text-encoding": "^0.6.4",
     "vue": "^2.1.7",

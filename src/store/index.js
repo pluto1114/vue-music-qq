@@ -12,7 +12,8 @@ const store = new Vuex.Store({
         lyricArr: [],
         lrcTimeArr: [],
         lrcMarginTop:0,
-        playing:false
+        playing:false,
+        audio:new Audio()
     },
     getters: {
         

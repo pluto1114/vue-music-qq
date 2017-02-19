@@ -6,22 +6,21 @@
 	          M
 	        </div>
 	        <h1 class="mu-banner-title">
-	          Muse-UI
+	          qq音乐
 	        </h1>
 	        <h2 class="mu-banner-sub-title">
-	          subTitle
+	          拥抱Vue，享受生活
 	        </h2>
 	        <div class="mu-banner-actions">
-	          <mu-raised-button label="Get Started" href="#/install" class="mu-banner-button"/>
+	          <mu-text-field hintText="搜索您喜欢的歌曲" type="text" icon="search" iconClass="color-white" hintTextClass="color-white" inputClass="color-white" underlineClass="border-white-alpha" underlineFocusClass="border-white" fullWidth/>
 	        </div>
 	      </div>
 	      <div class="mu-banner-appbar-height"></div>
 	    </div>
 	    <mu-content-block>
       <mu-list>
-        <mu-list-item :title="x.songName" v-for="(x,index) of hotSongArr" @click="handleSelect(x.musicData.songmid)">
+        <mu-list-item :title="x.songname" v-for="(x,index) of hotSongArr" @click="handleSelect(x.albumid,x.songid,x.songmid)">
            <mu-badge :content="(index+1)+''" circle slot="left"/>
-           <span slot="after">{{x.singerName}}</span>
         </mu-list-item>
         <mu-divider />
       </mu-list>
@@ -30,7 +29,7 @@
 </template>
 
 <script>
-import {search,fetchTopList,fetchHotList} from '../store/api'
+
 export default {
   data () {
     return {
@@ -38,13 +37,16 @@ export default {
     }
   },
   mounted(){
-  	console.log(hot_all)
-    this.hotSongArr=hot_all.songlist;
+  	//console.log(hot_all)
+    var songlist=[];
+    for (var i = 0; i <20; i++) {
+      
+    }
+    this.hotSongArr=hot_all.cdlist[0].songlist;
   },
   methods:{
-    handleSelect(mid){
-      console.log(mid)
-      this.$router.push("/player/"+mid);
+    handleSelect(albumid,songid,songmid){
+      this.$router.push("/player/"+albumid+"/"+songid+"/"+songmid);
     }
   }
 }
@@ -98,4 +100,19 @@ export default {
   font-weight: 300;
   margin-bottom: 16px;
 }
+.mu-banner-actions{
+  padding: 0.2em 3.5em;
+}
+.color-white{
+  color: fade(@alternateTextColor, 87%);
+}
+.border-white-alpha{
+  color: fade(@alternateTextColor, 50%);
+  background-color: fade(@alternateTextColor, 50%);
+}
+.border-white{
+  color: fade(@alternateTextColor, 87%);
+  background-color: fade(@alternateTextColor, 87%);
+}
+
 </style>

@@ -126,8 +126,8 @@ $api = new TencentMusicAPI();
 // $result = $api->detail('001icUif3vTGcO');
 // $result = $api->album('002rBshp4WPAut');
 // $result = $api->playlist('801491460');
-$result = $api->url('001icUif3vTGcO');
-// $result = $api->lyric('001icUif3vTGcO');
+// $result = $api->url('001icUif3vTGcO');
+$result = $api->lyric('001icUif3vTGcO');
 
 # return JSON, just use it
 var_dump(json_decode($result));

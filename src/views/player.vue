@@ -1,22 +1,83 @@
 <template>
-  <div>
-    {{mid}}
+  <div class="autum">
+    <div class="album-show rotating">
+      <img :src='albumImgUrl' />
+    </div>
+    <div class="progress">
+      <controls :songid="songid"></controls>
+      <lyric :songid="songid"></lyric>
+    </div>
   </div>
 </template>
 
 <script>
+import Lyric from '../components/Lyric';
+import Controls from '../components/Controls';
+
+import { mapState } from 'vuex';
+const base64DecodeUtils = require('base64-decode-utils');
 export default {
-  name: 'hello',
   data () {
     return {
-    	mid:(this.$route.params.mid || '307525'),
-      msg: 'Welcome to Your Vue.js App'
+      albumid:(this.$route.params.albumid || 0),
+      songid:(this.$route.params.songid || '105738437'),
+    	songmid:(this.$route.params.songmid || '001Ud2bQ0u61uC')
     }
-  }
+  },
+  computed:{
+    albumImgUrl(){
+      return `http://imgcache.qq.com/music/photo/album_300/${this.albumid%100}/300_albumpic_${this.albumid}_0.jpg`
+    },
+   
+  },  
+  mounted(){
+    
+   
+  },
+  methods:{
+    
+  },
+  components:{Lyric,Controls}
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.autumn {
+background-image: radial-gradient(27% 185%, #F9F6F1 0%, #D7D0C5 100%);
+height:100%;
+}
+.album-show{
+  width:18em;
+  height:18em;
+  margin:2em auto;
+
+}
+.album-show img{
+  width:100%;
+  height:100%;
+  border-radius: 50%;
+  box-shadow: 0 14px 45px rgba(0,0,0,.247059), 0 10px 18px rgba(0,0,0,.219608);
+}
+.rotating{
+  animation: rotate 30s linear 0s infinite normal both running;
+}
+.progress{
+
+}
+.flex-slider{
+  margin:0 1em;
+  padding-top: 0.8em;
+}
+.silder{
+  display: inline;
+}
+
+@keyframes rotate
+{
+from {transform:rotateZ(0deg);}
+to {transform:rotateZ(360deg);}
+}
+
 
 </style>

@@ -8,35 +8,7 @@ Vue.use(VueResource)
 //Vue.http.options.emulateJSON = true;
 var qqAPI={
   
-  hot_list: {
-    url: 'http://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg?',
-    params: () => {
-      return {
-        'disstid':801491460,
-        'utf8':1,
-        'type':1,
-      }
-    }
-    
-  },
-  top_list: {
-    url: 'https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg',
-    params: () => {
-      return {
-        format: 'jsonp',
-        g_tk: 5381,
-        uin: 0,
-        inCharset: 'utf-8',
-        outCharset: 'utf-8',
-        notice: 0,
-        platform: 'h5',
-        needNewCode: 1,
-        jsonp: 'jsonpCallback',
-        _: new Date().getTime()
-      }
-    }
-    
-  },
+ 
   album: {
     url: 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_album_info_cp.fcg',
     params: (id) => {
@@ -46,7 +18,6 @@ var qqAPI={
         loginUin: 0,
         hostUin: 0,
         format: 'jsonp',
-        jsonp: 'jsonpCallback',
         inCharset: 'utf8',
         outCharset: 'utf-8',
         notice: 0,
@@ -56,25 +27,12 @@ var qqAPI={
     },
     
   },
-  singer_info: {
-    url: 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg',
-    params: (id) => {
+  song_info: {
+    url: '/qq-m-api/v8/fcg-bin/fcg_play_single_song.fcg',
+    params: (mid) => {
       return {
-        order: 'listen',
-        begin: 0,
-        num: 8,
-        singermid: id,
-        g_tk: 5381,
-        uin: 0,
-        format: 'jsonp',
-        jsonp: 'jsonpCallback',
-        inCharset: 'utf-8',
-        outCharset: 'utf-8',
-        notice: 0,
-        platform: 'h5page',
-        needNewCode: 1,
-        from: 'h5',
-        _: new Date().getTime()
+        'songmid':mid,
+        'format':'json',
       }
     },
     
@@ -111,62 +69,21 @@ var qqAPI={
     },
     
   },
-  home_info: {
-    url: 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg',
-    params: () => {
-      return {
-        g_tk: 5381,
-        uin: 0,
-        format: 'jsonp',
-        jsonp: 'jsonpCallback',
-        inCharset: 'utf-8',
-        outCharset: 'utf-8',
-        notice: 0,
-        platform: 'h5',
-        needNewCode: 1,
-        _: new Date().getTime()
-      }
-    },
-    
-  },
+  
   lyric: {
     url: 'https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric.fcg',
     params: (id) => {
       return {
         nobase64:1,
         musicid:id,
-        songtype:0,
-        jsonp:'callback'
+        songtype:0
       }
     },
     
   },
-  cd_info:{
-    url:'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg',
-    params:(id)=>{
-      return {
-        g_tk:5381,
-        uin:0,
-        format:'jsonp',
-        jsonp: 'jsonpCallback',
-        inCharset:'utf-8',
-        outCharset:'utf-8',
-        notice:0,
-        platform:'h5',
-        needNewCode:1,
-        new_format:1,
-        pic:500,
-        disstid:127812,
-        type:1,
-        json:1,
-        utf8:1,
-        onlysong:0,
-        nosign:1,
-        _:new Date().getTime()
-      }
-    },
+  
     
-  }
+
 }
 
 export function search (word) {
@@ -179,17 +96,11 @@ export function search (word) {
     });
     return p;
 }
-export function fetchHomeInfo () {
-    var p=Vue.http.jsonp(qqAPI.home_info.url,qqAPI.home_info.params());
-    p.then(resp => {
-        console.log(resp.data);
-    }, resp => {
-        console.log("request error");
-    });
-	return p;
-}
-export function fetchTopSong () {
-    var p=Vue.http.jsonp(qqAPI.top_song.url,qqAPI.top_song.params());
+
+export function fetchSongInfo (song_mid) {
+    var p=Vue.http.get(qqAPI.song_info.url,{params:qqAPI.song_info.params(song_mid)});
+    //var p=Vue.http.get("/qq-m-api/v8/fcg-bin/fcg_play_single_song.fcg?songmid=001Ud2bQ0u61uC&format=json");
+    console.log(qqAPI.song_info.url+'?'+querystring.stringify(qqAPI.song_info.params(song_mid)))
     p.then(resp => {
         console.log(resp.data);
     }, resp => {
@@ -197,27 +108,7 @@ export function fetchTopSong () {
     });
     return p;
 }
-export function fetchTopList () {
-    // var p=Vue.http.jsonp(qqAPI.top_list.url,{params:qqAPI.top_list.params(),jsonp: 'jsonpCallback'});
-    var p=Vue.http.jsonp("http://music.qq.com/musicbox/shop/v3/data/random/1/random1.js?p=12",{jsonp: "callback",jsonpCallback: "JsonCallback"});
-    p.then(resp => {
-        console.log(resp.data);
-    }, resp => {
-        console.log("request error");
-    });
-    return p;
-}
-export function fetchHotList () {
-    var p=Vue.http.jsonp(qqAPI.hot_list.url,{params:qqAPI.hot_list.params(),jsonp: "callback",jsonpCallback: "jsonCallback",scriptCharset:'GBK'});
-   
-    // console.log(qqAPI.hot_list.url+querystring.stringify(qqAPI.hot_list.params()))
-    p.then(resp => {
-        console.log(resp.data);
-    }, resp => {
-        console.log("request error");
-    });
-    return p;
-}
+
 export function fetchHotkey () {
 	var p=Vue.http.jsonp(qqAPI.hotkey.url,qqAPI.hotkey.params());
     p.then(resp => {
@@ -227,8 +118,8 @@ export function fetchHotkey () {
     });
     return p;
 }
-export function fetchAlbum () {
-    var p=Vue.http.jsonp(qqAPI.album.url,qqAPI.album.params());
+export function fetchAlbum (albummid) {
+    var p=Vue.http.jsonp(qqAPI.album.url,{params:qqAPI.album.params(albummid),jsonp: 'jsonpCallback',});
     p.then(resp => {
         console.log(resp.data);
     }, resp => {
@@ -237,11 +128,12 @@ export function fetchAlbum () {
     return p;
 }
 
-export function fetchLyric (music_id) {
-    var p=Vue.http.jsonp(qqAPI.lyric.url,qqAPI.lyric.params());
+export function fetchLyric (songid) {
+    var p=Vue.http.jsonp('https://api.darlin.me/music/lyric/'+songid+'/',{params:qqAPI.lyric.params(songid),jsonp:'callback'});
     p.then(resp => {
-        console.log(resp.data);
+        console.log(resp);
     }, resp => {
+        console.log(resp);
         console.log("request error");
     });
     return p;

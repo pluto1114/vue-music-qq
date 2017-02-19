@@ -6,6 +6,7 @@ import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
 import FastClick from 'fastclick'
 import router from './router'
+import store from './store'
 Vue.use(MuseUI)
 
 
@@ -16,5 +17,6 @@ new Vue({
   el: '#app',
   template: '<App/>',
   components: { App },
-  router
+  router,
+  store
 })
