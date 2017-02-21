@@ -1,16 +1,16 @@
 <template>
   <div class="lyric">
   	<mu-content-block>
-    	<mu-list>
-        <mu-list-item :title="x.lrc" v-for="x of lyricArr">
-        </mu-list-item>
-        </mu-list>
+    	<ul :style="{marginTop:lrcMarginTop}">
+        <li v-for="x of lyricArr" :class="x.selected?selectedColor:defaultColor">{{x.lrc}}
+        </li>
+      </ul>
     </mu-content-block>   
   </div>
 </template>
 
 <script>
-import {fetchSongInfo,fetchAlbum,fetchLyric} from '../store/api'
+
 import { mapState } from 'vuex';
 
 var Base64 = require('js-base64').Base64;
@@ -18,15 +18,28 @@ export default {
   props:['songid'],	
   data () {
     return {
-		lyricArr:[]      
+		  defaultColor:'t-gra',
+      selectedColor:'t-blu',
+      // lrcCurIndex:this.$store.state.lrcCurIndex
     }
   },
-  mounted(){
-  	var p=fetchLyric(this.songid).then(resp=>{
+  computed:{
+    ...mapState({
+      lyricArr:state=>state.lyricArr,
+      lrcCurIndex:state=>state.lrcCurIndex
+    }),
+    lrcMarginTop(){
+      return this.lrcCurIndex*(-2)+4+'em'
+    }
+  },
+  mounted(){  	
+    this.$store.dispatch("FETCH_LYRIC",this.songid).then((resp)=>{
       let arr = Base64.decode(resp.data.lyric).split('\n');
-      console.log(convertLrcArr(arr));
-      this.lyricArr=convertLrcArr(arr);
-    });
+      this.$store.commit("loadLyric",{lyricArr:convertLrcArr(arr)})
+    }); 
+  },
+  methods:{
+
   }
 }
 function convertLrcArr(arr) {
@@ -61,6 +74,27 @@ function convertLrcArr(arr) {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
+<style>
+.lyric{
+  height:12em;
+  overflow-x:hidden; 
+  overflow-y: scroll;
+  font-size: 1.5em;
+}
+.lyric ul {
+  /*transition: transform 1s;*/
+  transition: all 1s;
+}
+.lyric li{
+  list-style: none;
+  line-height: 2em;
+  transition:0.25s ease;
+}
+.t-gra{
+  color: #999;
+}
+.t-blu{
+  color:#22c;
+  
+}
 </style>

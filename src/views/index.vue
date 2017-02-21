@@ -11,8 +11,8 @@
 	        <h2 class="mu-banner-sub-title">
 	          拥抱Vue，享受生活
 	        </h2>
-	        <div class="mu-banner-actions">
-	          <mu-text-field hintText="搜索您喜欢的歌曲" type="text" icon="search" iconClass="color-white" hintTextClass="color-white" inputClass="color-white" underlineClass="border-white-alpha" underlineFocusClass="border-white" fullWidth/>
+	        <div class="mu-banner-actions" @keypress="handlePress">
+	          <mu-text-field hintText="搜索您喜欢的歌曲" type="search" icon="search" iconClass="color-white" hintTextClass="color-white" inputClass="color-white" underlineClass="border-white-alpha" underlineFocusClass="border-white" fullWidth />
 	        </div>
 	      </div>
 	      <div class="mu-banner-appbar-height"></div>
@@ -33,7 +33,8 @@
 export default {
   data () {
     return {
-      hotSongArr:[]
+      hotSongArr:[],
+
     }
   },
   mounted(){
@@ -47,6 +48,11 @@ export default {
   methods:{
     handleSelect(albumid,songid,songmid){
       this.$router.push("/player/"+albumid+"/"+songid+"/"+songmid);
+    },
+    handlePress(event){
+      if(event.keyCode==13){
+        console.log("start search")
+      }
     }
   }
 }

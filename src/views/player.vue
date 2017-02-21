@@ -3,10 +3,15 @@
     <div class="album-show rotating">
       <img :src='albumImgUrl' />
     </div>
-    <div class="progress">
-      <controls :songid="songid"></controls>
-      <lyric :songid="songid"></lyric>
+    <div class="song-info">
+      <h2>{{song.name}}</h2>
+      <div>{{singer.name}}</div>
     </div>
+
+    
+    <controls :songid="songid"></controls>
+    <lyric :songid="songid"></lyric>
+    
   </div>
 </template>
 
@@ -19,9 +24,12 @@ const base64DecodeUtils = require('base64-decode-utils');
 export default {
   data () {
     return {
+      bottomNav: 'recents',
       albumid:(this.$route.params.albumid || 0),
       songid:(this.$route.params.songid || '105738437'),
-    	songmid:(this.$route.params.songmid || '001Ud2bQ0u61uC')
+    	songmid:(this.$route.params.songmid || '001Ud2bQ0u61uC'),
+      song:{},
+      singer:{}
     }
   },
   computed:{
@@ -31,7 +39,11 @@ export default {
    
   },  
   mounted(){
-    
+    this.$store.dispatch("FETCH_SONG_INFO",this.songmid).then((resp)=>{
+      console.log(resp.data.data[0].singer)
+      this.song=resp.data.data[0];
+      this.singer=resp.data.data[0].singer[0];
+    }); 
    
   },
   methods:{
@@ -47,6 +59,7 @@ export default {
 background-image: radial-gradient(27% 185%, #F9F6F1 0%, #D7D0C5 100%);
 height:100%;
 }
+
 .album-show{
   width:18em;
   height:18em;
@@ -58,6 +71,9 @@ height:100%;
   height:100%;
   border-radius: 50%;
   box-shadow: 0 14px 45px rgba(0,0,0,.247059), 0 10px 18px rgba(0,0,0,.219608);
+}
+.song-info{
+  text-align: center;
 }
 .rotating{
   animation: rotate 30s linear 0s infinite normal both running;

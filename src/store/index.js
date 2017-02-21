@@ -1,19 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { fetchSongList, fetchSong, fetchLyric } from './api'
+import {fetchSongInfo,fetchAlbum,fetchLyric} from '../store/api'
 import _ from 'lodash'
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         showWelcome: true,
         searchWordArr: localStorage.searchWords ? JSON.parse(localStorage.searchWords) : [],
-        songs: [],
-        song: null,
         lyricArr: [],
         lrcTimeArr: [],
-        lrcMarginTop:0,
         playing:false,
-        audio:new Audio()
+        audio:new Audio(),
+        currentTime:0,
+        lrcCurIndex:0
     },
     getters: {
         
@@ -21,23 +20,14 @@ const store = new Vuex.Store({
     actions: {
         FETCH_SONG_LIST(context, options) {
             let p = fetchSongList(options);
-            p.then(resp => {
-                context.commit("loadSongList", { songs: resp.data.result.songs });
-            });
             return p;
         },
-        FETCH_SONG(context, music_id) {
-            let p = fetchSong(music_id);
-            p.then(resp => {
-                context.commit("loadSong", { song: resp.data.songs[0] });
-            });
+        FETCH_SONG_INFO(context, song_mid) {
+            let p = fetchSongInfo(song_mid);
             return p;
         },
         FETCH_LYRIC(context, music_id) {
             let p = fetchLyric(music_id);
-            p.then(resp => {
-                context.commit("loadLyric", { lyric: resp.data.lrc.lyric });
-            });
             return p;
         },
         
@@ -56,50 +46,36 @@ const store = new Vuex.Store({
 
             localStorage.searchWords = JSON.stringify(state.searchWordArr);
         },
-        loadSongList(state, payload) {
-            state.songs = payload.songs;
-        },
-        loadSong(state, payload) {
-            state.song = payload.song;
-        },
+       
         loadLyric(state, payload) {
-            let arr = payload.lyric.split('\n');
-            state.lyricArr = convertLrcArr(arr);
+            state.lyricArr = payload.lyricArr;
             state.lrcTimeArr=_.map(state.lyricArr,'time');
         },
-        changePlaying(state,isPlaying){
-            state.playing=isPlaying;
+        play(state){
+            state.playing=true;
+            state.audio.play();
         },
-        changeLrcMarginTop(state,lrcMarginTop){
-            state.lrcMarginTop=lrcMarginTop;
-        }
+        pause(state){
+            state.playing=false;
+            state.audio.pause();
+        },
+        changePlayPos(state,time){
+            state.audio.currentTime=time;
+        },
+        changeCurrentTime(state,currentTime){
+            state.currentTime=currentTime;
+            state.lrcCurIndex=_.sortedIndex(state.lrcTimeArr, currentTime);
+            for (var i = 0; i < state.lyricArr.length; i++) {
+                state.lyricArr[i].selected = false;
+            }
+            if (state.lrcCurIndex > 0) {
+                state.lyricArr[state.lrcCurIndex - 1].selected = true;
+            }
+
+        },
     }
 
 });
 
-function convertLrcArr(arr) {
-    let lrcArr = [];
-    let duration = 0;
-    console.log(arr.length)
-    for (let i = 0; i < arr.length - 1; i++) {
-        let item = arr[i];
-        let lrcObj = {};
-        let timeStr = item.match("\\[(.+?)\\]")[1];
 
-        //declude not time
-        if (/[^0-9\.\:]/.test(timeStr)) {
-            continue;
-        }
-        let timeArr = timeStr.split(":");
-        let time = parseInt(timeArr[0]) * 60 + parseFloat(timeArr[1]);
-
-        lrcObj.selected = false;
-        lrcObj.show = true;
-
-        lrcObj.time = time;
-        lrcObj.lrc = item.replace(new RegExp(/(\.\d{2,3})/g), '');
-        lrcArr.push(lrcObj);
-    }
-    return lrcArr;
-}
 export default store

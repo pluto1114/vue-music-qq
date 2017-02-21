@@ -1,10 +1,13 @@
 <template>
   <div class="controls">
+    <div class="ctrl-button">
+      <i class="material-icons" @click="handlePlay()">{{playing?'pause_circle_outline':'play_circle_outline'}}</i>
+    </div>
     <mu-content-block>
         <mu-flexbox>
           <span class="cur-time">{{currentTimeStr}}</span>	
           <mu-flexbox-item class="flex-slider">
-          <mu-slider :value="playedPercent" class="slider"/>
+          <mu-slider :max="duration" :value="currentTime" class="slider" @change="handleChange"/>
           </mu-flexbox-item> 
           <span>{{totalTimeStr}}</span>
         </mu-flexbox>
@@ -20,7 +23,7 @@ export default {
     return {
       duration:0,
       loadedPercent:0,
-      currentTime:0,
+      currentTime:this.$store.state.currentTime,    
       currentSecond:0,
       totalTimeStr:'00:00',
     }
@@ -30,10 +33,7 @@ export default {
     currentTimeStr(){
       return this.convertToTime(this.currentSecond);
     },
-    playedPercent(){
-      return (this.currentTime/this.duration)*100;
-    },
-    ...mapState(['audio'])
+    ...mapState(['audio','playing'])
   },  
   mounted(){
     
@@ -41,7 +41,7 @@ export default {
 
     this.audio.src=songUrl;
     
-    this.audio.play();
+    
     this.audio.addEventListener("loadeddata",(e)=>{
       this.duration=this.audio.duration;
       this.totalTimeStr=this.convertToTime(this.duration);
@@ -57,7 +57,10 @@ export default {
       }
       // console.log(this.durationStr)
       this.currentTime=this.audio.currentTime;
-    })
+      this.$store.commit("changeCurrentTime", this.audio.currentTime);
+    });
+
+    this.$store.commit("play");
   },
   methods:{
     convertToTime(time){
@@ -73,12 +76,30 @@ export default {
       cTime = min + ':' + sec
       return cTime;
     },
+    handlePlay(){
+      if(this.playing){
+        this.$store.commit("pause");
+      }else{
+        this.$store.commit("play");
+      }
+    },
+    handleChange(value){
+      this.$store.commit("changePlayPos",value);
+    }
   },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.ctrl-button{
+  width:100%;
+  text-align: center;
+  margin-top: 1.5em;
+}
+.ctrl-button .material-icons{
+  font-size: 3.25em;
+}
 .flex-slider{
   margin:0 1em;
   padding-top: 1em;
