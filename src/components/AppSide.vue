@@ -1,7 +1,7 @@
 <template>
   <div class="app-side">
   	
-  	<mu-drawer :open="open" :docked="docked" @close="toggle()">
+  	<mu-drawer :open="open"  @close="toggle()">
   	  <mu-appbar class="exmaples-nav-appbar" :zDepth="0">
 	    <a class="exmaples-appbar-title" href="/" style="display:inline-block;">播放历史</a>
 	    <mu-badge content="2017" class="exmaples-version" secondary/>
@@ -9,7 +9,7 @@
 	  <mu-divider/>
       <mu-list>
         <mu-list-item v-for="(x,index) of hisSongArr" :title="x.songname" titleClass="my-title" @click="handleClick(index)"/>
-        <mu-list-item v-if="docked" @click="handleClose" title="关闭"/>
+        <mu-list-item  @click="handleClose" title="关闭"/>
       </mu-list>
     </mu-drawer> 
   </div>
