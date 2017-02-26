@@ -104,7 +104,7 @@ export default {
   margin-top: 1.5em;
 }
 .ctrl-button .material-icons{
-  font-size: 3.25em;
+  font-size: 3.6em;
 }
 .flex-slider{
   margin:0 1em;

@@ -12,7 +12,7 @@
 	          拥抱Vue，享受生活
 	        </h2>
 	        <div class="mu-banner-actions" @keyup.enter="handleEnter">
-	          <mu-text-field hintText="搜索您喜欢的歌曲或歌手" v-model="word" type="search" icon="search" iconClass="color-white" hintTextClass="color-white" inputClass="color-white" underlineClass="border-white-alpha" underlineFocusClass="border-white" fullWidth />
+	          <mu-text-field hintText="搜索喜欢歌曲或歌手" v-model="word" type="search" icon="search" iconClass="color-white" hintTextClass="color-white" inputClass="color-white" underlineClass="border-white-alpha" underlineFocusClass="border-white" fullWidth />
 	        </div>
 	      </div>
 	      <div class="mu-banner-appbar-height"></div>

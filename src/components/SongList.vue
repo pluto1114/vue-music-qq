@@ -45,7 +45,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" rel="stylesheet/scss" scoped>
 .song-list{
-  background:#efeff4;
+  
 }
 .item{
   line-height:4em;
