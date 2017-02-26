@@ -49,14 +49,11 @@ export default {
       this.audio.src=songUrl;
       
       
-      this.audio.addEventListener("loadeddata",(e)=>{
-        this.duration=this.audio.duration;
-        this.totalTimeStr=this.convertToTime(this.duration);
-      });
+     
       this.audio.addEventListener("timeupdate",(e)=>{
+        this.duration=this.audio.duration;
         if(this.duration!=0){
-          // this.duration=this.audio.duration;
-
+          this.totalTimeStr=this.convertToTime(this.duration);
           if(this.currentSecond!=parseInt(this.audio.currentTime)){
             this.currentSecond=parseInt(this.audio.currentTime);
           }
