@@ -3,21 +3,20 @@
   	
   	<mu-drawer :open="open" :docked="docked" @close="toggle()">
   	  <mu-appbar class="exmaples-nav-appbar" :zDepth="0">
-	    <a class="exmaples-appbar-title" @click="handleMenuChange('#/index')" href="#/index" style="display:inline-block;">Muse-UI</a>
-	    <mu-badge content="rc" class="exmaples-version" secondary/>
+	    <a class="exmaples-appbar-title" href="/" style="display:inline-block;">播放历史</a>
+	    <mu-badge content="2017" class="exmaples-version" secondary/>
 	  </mu-appbar>
 	  <mu-divider/>
-      <mu-list @itemClick="docked ? '' : toggle()">
-        <mu-list-item title="Menu Item 1"/>
-        <mu-list-item title="Menu Item 2"/>
-        <mu-list-item title="Menu Item 3"/>
-        <mu-list-item v-if="docked" @click.native="open = false" title="Close"/>
+      <mu-list>
+        <mu-list-item v-for="(x,index) of hisSongArr" :title="x.songname" titleClass="my-title" @click="handleClick(index)"/>
+        <mu-list-item v-if="docked" @click="handleClose" title="关闭"/>
       </mu-list>
     </mu-drawer> 
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   name: 'appSide',
   props: {
@@ -30,27 +29,14 @@ export default {
       default: true
     }
   },
+  computed:mapState(['hisSongArr']),
   methods: {
-    toggle (flag) {
-      this.open = !this.open
-      this.docked = !flag
-    },
     handleClose () {
       this.$emit('close')
     },
-    handleMenuChange (val) {
-      this.menuVal = val
-      if (this.docked) {
-        window.location.hash = this.menuVal
-      } else {
-        this.changeHref = true
-      }
-      this.$emit('change', val)
-    },
-    handleHide () {
-      if (!this.changeHref) return
-      window.location.hash = this.menuVal
-      this.changeHref = false
+    handleClick(index){
+      let song=this.hisSongArr[index];
+      this.$router.push(`/player/${song.albumid}/${song.songid}/${song.songmid}`);
     }
   }
 }
@@ -70,5 +56,9 @@ export default {
 }
 .exmaples-appbar-title{
   color: @secondaryTextColor;
+}
+
+.my-title{
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 </style>

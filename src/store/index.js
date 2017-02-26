@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {fetchSongInfo,fetchAlbum,fetchLyric} from '../store/api'
+import {fetchSongInfo,fetchAlbum,fetchLyric,search} from '../store/api'
 import _ from 'lodash'
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
-        showWelcome: true,
-        searchWordArr: localStorage.searchWords ? JSON.parse(localStorage.searchWords) : [],
+        hisSongArr: localStorage.hisSongArr ? JSON.parse(localStorage.hisSongArr) : [],
         lyricArr: [],
         lrcTimeArr: [],
         playing:false,
@@ -18,8 +17,8 @@ const store = new Vuex.Store({
         
     },
     actions: {
-        FETCH_SONG_LIST(context, options) {
-            let p = fetchSongList(options);
+        FETCH_SONG_LIST(context, word) {
+            let p = search(word);
             return p;
         },
         FETCH_SONG_INFO(context, song_mid) {
@@ -33,18 +32,16 @@ const store = new Vuex.Store({
         
     },
     mutations: {
-        hideWelcome(state) {
-            state.showWelcome = false;
-        },
-        addSearchWord(state, payload) {
-            if (state.searchWordArr.indexOf(payload.value) < 0) {
-                state.searchWordArr.unshift(payload.value);
+        
+        addHisSong(state, payload) {
+            if (state.hisSongArr.indexOf(payload.song) < 0) {
+                state.hisSongArr.unshift(payload.song);
             }
-            if (state.searchWordArr.length > 5) {
-                state.searchWordArr = state.searchWordArr.slice(0, 5);
+            if (state.hisSongArr.length > 10) {
+                state.hisSongArr = state.hisSongArr.slice(0, 10);
             }
 
-            localStorage.searchWords = JSON.stringify(state.searchWordArr);
+            localStorage.hisSongArr = JSON.stringify(state.hisSongArr);
         },
        
         loadLyric(state, payload) {

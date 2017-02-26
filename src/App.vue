@@ -1,8 +1,10 @@
 <template>
   <div id="app">
-    <mu-appbar :zDepth="0" :title="title" class="example-appbar" :class="{'nav-hide': !open}">
+    <mu-appbar :zDepth="0"  class="example-appbar" :class="{'nav-hide': !open}">
       <mu-icon-button @click="toggleNav" icon="menu" slot="left"/>
-      <mu-icon-button slot="right" href="https://github.com/museui/muse-ui" icon=":mudocs-icon-custom-github"/>
+      <h2  @click="toIndex" slot="left">首页</h2>
+      <mu-icon-button href="https://github.com/museui/muse-ui" icon="github_circle" style="margin-left:4em;">
+      </mu-icon-button>
     </mu-appbar>
     <app-side @change="handleMenuChange" @close="toggleNav" :open="open" :docked="docked" />
     <div class="example-content" :class="{'nav-hide': !open}">
@@ -33,9 +35,11 @@ export default {
     }
     window.addEventListener('resize', this.handleResize)
     window.addEventListener('hashchange', () => {
-      this.setTitle()
+      // this.setTitle()
     })
-
+    this.$on("close",()=>{
+      this.open=false;
+    })
     
   },
   methods: {
@@ -68,6 +72,9 @@ export default {
           return
         }
       }
+    },
+    toIndex(){
+      this.$router.push("/");
     }
   },
   destroyed () {

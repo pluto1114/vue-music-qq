@@ -24,30 +24,39 @@ const base64DecodeUtils = require('base64-decode-utils');
 export default {
   data () {
     return {
-      bottomNav: 'recents',
-      albumid:(this.$route.params.albumid || 0),
-      songid:(this.$route.params.songid || '105738437'),
-    	songmid:(this.$route.params.songmid || '001Ud2bQ0u61uC'),
+      bottomNav: 'recents',    
       song:{},
       singer:{}
     }
   },
   computed:{
+    albumid(){
+      return (this.$route.params.albumid || 0)
+    },
+    songid(){
+      return (this.$route.params.songid || '105738437')
+    },
+    songmid(){
+      return (this.$route.params.songmid || '001Ud2bQ0u61uC')
+    },
     albumImgUrl(){
       return `http://imgcache.qq.com/music/photo/album_300/${this.albumid%100}/300_albumpic_${this.albumid}_0.jpg`
-    },
-   
-  },  
-  mounted(){
-    this.$store.dispatch("FETCH_SONG_INFO",this.songmid).then((resp)=>{
-      console.log(resp.data.data[0].singer)
-      this.song=resp.data.data[0];
-      this.singer=resp.data.data[0].singer[0];
-    }); 
+    },   
+  }, 
+  watch:{
+        '$route':'fetchdata'
+  }, 
+  created(){
+     this.fetchdata()
    
   },
   methods:{
-    
+    fetchdata(){
+      this.$store.dispatch("FETCH_SONG_INFO",this.songmid).then((resp)=>{
+        this.song=resp.data.data[0];
+        this.singer=resp.data.data[0].singer[0];
+      });
+    }
   },
   components:{Lyric,Controls}
 }

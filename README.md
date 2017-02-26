@@ -1,6 +1,18 @@
 # vue-music-qq
 
-> A Vue.js project
+> A Vue.js project for music
+### Use
+* vuejs-2.1.7
+* vue-cli
+* vue-router
+* vuex
+* muse-ui
+
+
+## Support
+* Chrome
+* Firefox
+* Mobile browser
 
 ## Build Setup
 
@@ -15,4 +27,8 @@ npm run dev
 npm run build
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+# Conatct
+
+- Tencent QQ: 342878509
+- E-mail: xiongmao1114@163.com
+- Github: https://github.com/pluto1114/vue-music-qq

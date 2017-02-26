@@ -34,35 +34,41 @@ export default {
       return this.convertToTime(this.currentSecond);
     },
     ...mapState(['audio','playing'])
-  },  
+  }, 
+  watch:{
+    'songid':'fetchdata'
+  }, 
   mounted(){
+    this.fetchdata()
     
-    var songUrl=`http://ws.stream.qqmusic.qq.com/${this.songid}.m4a?fromtag=46`
-
-    this.audio.src=songUrl;
-    
-    
-    this.audio.addEventListener("loadeddata",(e)=>{
-      this.duration=this.audio.duration;
-      this.totalTimeStr=this.convertToTime(this.duration);
-    });
-    this.audio.addEventListener("timeupdate",(e)=>{
-      if(this.duration!=0){
-        // this.duration=this.audio.duration;
-
-        if(this.currentSecond!=parseInt(this.audio.currentTime)){
-        	this.currentSecond=parseInt(this.audio.currentTime);
-        }
-
-      }
-      // console.log(this.durationStr)
-      this.currentTime=this.audio.currentTime;
-      this.$store.commit("changeCurrentTime", this.audio.currentTime);
-    });
-
-    this.$store.commit("play");
   },
   methods:{
+    fetchdata(){
+      var songUrl=`http://ws.stream.qqmusic.qq.com/${this.songid}.m4a?fromtag=46`
+
+      this.audio.src=songUrl;
+      
+      
+      this.audio.addEventListener("loadeddata",(e)=>{
+        this.duration=this.audio.duration;
+        this.totalTimeStr=this.convertToTime(this.duration);
+      });
+      this.audio.addEventListener("timeupdate",(e)=>{
+        if(this.duration!=0){
+          // this.duration=this.audio.duration;
+
+          if(this.currentSecond!=parseInt(this.audio.currentTime)){
+            this.currentSecond=parseInt(this.audio.currentTime);
+          }
+
+        }
+        // console.log(this.durationStr)
+        this.currentTime=this.audio.currentTime;
+        this.$store.commit("changeCurrentTime", this.audio.currentTime);
+      });
+
+      this.$store.commit("play");
+    },
     convertToTime(time){
       var min = Math.floor((time / 60) % 60);
       var sec = Math.floor(time % 60);

@@ -32,20 +32,24 @@ export default {
       return this.lrcCurIndex*(-2)+4+'em'
     }
   },
-  mounted(){  	
-    this.$store.dispatch("FETCH_LYRIC",this.songid).then((resp)=>{
+  watch:{
+    'songid':'fetchdata'
+  },
+  mounted(){ 
+    this.fetchdata()
+  },
+  methods:{
+    fetchdata(){
+      this.$store.dispatch("FETCH_LYRIC",this.songid).then((resp)=>{
       let arr = Base64.decode(resp.data.lyric).split('\n');
       this.$store.commit("loadLyric",{lyricArr:convertLrcArr(arr)})
     }); 
-  },
-  methods:{
-
+    }
   }
 }
 function convertLrcArr(arr) {
     let lrcArr = [];
     let duration = 0;
-    console.log(arr.length)
     for (let i = 0; i < arr.length - 1; i++) {
         let item = arr[i];
         let lrcObj = {};
@@ -76,7 +80,7 @@ function convertLrcArr(arr) {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 .lyric{
-  height:12em;
+  height:18em;
   overflow-x:hidden; 
   overflow-y: scroll;
   font-size: 1.5em;
