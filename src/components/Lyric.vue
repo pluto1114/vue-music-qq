@@ -75,6 +75,7 @@ function convertLrcArr(arr) {
     }
     return lrcArr;
 }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -84,6 +85,14 @@ function convertLrcArr(arr) {
   overflow-x:hidden; 
   overflow-y: scroll;
   font-size: 1.5em;
+}
+@media (max-width: 993px) {
+    .lyric{
+      height:10em;
+      overflow-x:hidden; 
+      overflow-y: scroll;
+      font-size: 1em;
+    }
 }
 .lyric ul {
   /*transition: transform 1s;*/
