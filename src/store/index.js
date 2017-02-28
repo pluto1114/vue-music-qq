@@ -34,9 +34,9 @@ const store = new Vuex.Store({
     mutations: {
         
         addHisSong(state, payload) {
-            if (state.hisSongArr.indexOf(payload.song) < 0) {
-                state.hisSongArr.unshift(payload.song);
-            }
+          
+            state.hisSongArr.unshift(payload.song);
+         
             if (state.hisSongArr.length > 10) {
                 state.hisSongArr = state.hisSongArr.slice(0, 10);
             }
