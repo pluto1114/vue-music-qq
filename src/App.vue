@@ -8,7 +8,9 @@
     </mu-appbar>
     <app-side @change="handleMenuChange" @close="toggleNav" :open="open" :docked="docked" />
     <div class="example-content" :class="{'nav-hide': !open}">
-      <router-view></router-view>
+      <transition name="fade"  mode="out-in">
+        <router-view></router-view>
+      </transition>
     </div>
   </div>
 </template>
@@ -134,4 +136,12 @@ function isDesktop () {
     padding: 24px 36px;
   }
 }
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s ease;
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0
+}
+
 </style>
