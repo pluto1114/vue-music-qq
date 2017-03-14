@@ -3,13 +3,13 @@
   	
   	<mu-drawer :open="open"  @close="toggle()">
   	  <mu-appbar class="exmaples-nav-appbar" :zDepth="0">
-	    <a class="exmaples-appbar-title" href="/" style="display:inline-block;">播放历史</a>
+	    <a class="exmaples-appbar-title" href="/" style="display:inline-block;">History List</a>
 	    <mu-badge content="2017" class="exmaples-version" secondary/>
 	  </mu-appbar>
 	  <mu-divider/>
       <mu-list>
         <mu-list-item v-for="(x,index) of hisSongArr" :title="x.songname" titleClass="my-title" @click="handleClick(index)"/>
-        <mu-list-item  @click="handleClose" title="关闭"/>
+        <mu-list-item  @click="handleClose" title="Close"/>
       </mu-list>
     </mu-drawer> 
   </div>

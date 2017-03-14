@@ -2,7 +2,7 @@
   <div id="app">
     <mu-appbar :zDepth="0"  class="example-appbar" :class="{'nav-hide': !open}">
       <mu-icon-button @click="toggleNav" icon="menu" slot="left"/>
-      <h2  @click="toIndex" slot="left">首页</h2>
+      <h2  @click="toIndex" slot="left">Home</h2>
       <mu-icon-button href="https://github.com/museui/muse-ui" icon="github_circle" style="margin-left:4em;">
       </mu-icon-button>
     </mu-appbar>

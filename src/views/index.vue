@@ -6,13 +6,13 @@
 	          M
 	        </div>
 	        <h1 class="mu-banner-title">
-	          qq音乐
+	          QQ Music
 	        </h1>
 	        <h2 class="mu-banner-sub-title">
-	          拥抱Vue，享受生活
+	         Embrace Vue,enjoy life
 	        </h2>
 	        <div class="mu-banner-actions" @keyup.enter="handleEnter">
-	          <mu-text-field hintText="搜索喜欢歌曲或歌手" v-model="word" type="search" icon="search" iconClass="color-white" hintTextClass="color-white" inputClass="color-white" underlineClass="border-white-alpha" underlineFocusClass="border-white" fullWidth />
+	          <mu-text-field hintText="search song or singer" v-model="word" type="search" icon="search" iconClass="color-white" hintTextClass="color-white" inputClass="color-white" underlineClass="border-white-alpha" underlineFocusClass="border-white" fullWidth />
 	        </div>
 	      </div>
 	      <div class="mu-banner-appbar-height"></div>
