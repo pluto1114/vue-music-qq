@@ -23,6 +23,7 @@ const store = new Vuex.Store({
         },
         FETCH_SONG_INFO(context, song_mid) {
             let p = fetchSongInfo(song_mid);
+            console.log("p",p)
             return p;
         },
         FETCH_LYRIC(context, music_id) {
