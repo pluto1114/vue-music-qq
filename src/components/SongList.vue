@@ -1,6 +1,6 @@
 <template>
-  <div class="song-list" :class="aniName">
-      <div class="item" v-for="(x,index) of songArr" @click="handleSelect(x)">
+  <div class="song-list" :class="show?'':'hide'">
+      <div class="item my-item" v-for="(x,index) of songArr" @click="handleSelect(x)">
           <mu-badge :content="(index+1)+''" circle/><span class="title">{{x.songname}}</span>
       </div>
   </div>
@@ -17,7 +17,7 @@ export default {
   },
   data(){
     return {
-      aniName:'animation-style-1'
+      show:false
     }
   },
   watch:{
@@ -28,9 +28,9 @@ export default {
   },
   methods:{
     fresh(){
-        this.aniName='hide';
+        this.show=false;
         setTimeout(()=>{
-          this.aniName='animation-style-1';
+          this.show=true;
         },300)
           console.log("fresh")
     },
@@ -59,7 +59,7 @@ export default {
 .hide{
   display:none;
 }
-.animation-style-1 > .item {
+.my-item {
     @for $i from 1 through 30 {
         &:nth-child(#{$i}) {
             opacity: 0;
@@ -70,6 +70,7 @@ export default {
         }
     }
 }
+
 @keyframes animationStyle1 {
     0% {
         opacity: 0;

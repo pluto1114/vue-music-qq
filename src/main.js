@@ -7,6 +7,9 @@ import 'muse-ui/dist/muse-ui.css'
 import FastClick from 'fastclick'
 import router from './router'
 import store from './store'
+import VueResource from 'vue-resource'
+
+Vue.use(VueResource)
 Vue.use(MuseUI)
 
 
