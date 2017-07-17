@@ -9,7 +9,7 @@
 	          QQ Music
 	        </h1>
 	        <h2 class="mu-banner-sub-title">
-	         Embrace Vue,enjoy life
+	         Embrace Vue , enjoy life
 	        </h2>
 	        <div class="mu-banner-actions" @keyup.enter="handleEnter">
 	          <mu-text-field hintText="search song or singer" v-model="word" type="search" icon="search" iconClass="color-white" hintTextClass="color-white" inputClass="color-white" underlineClass="border-white-alpha" underlineFocusClass="border-white" fullWidth />

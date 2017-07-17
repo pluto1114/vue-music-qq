@@ -28,7 +28,7 @@ npm run build
 ```
 ## Demo site(aliyun)
 
-# http://60.205.178.25/vue-music-qq
+http://47.94.146.181/vue-music-qq
 
 # Conatct
 
