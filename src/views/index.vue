@@ -57,6 +57,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='less'>
 @import "../../src/styles/vars.less";
+.mu-appbar{
+  background-color: @primaryColor;
+}
 .mu-banner{
   background-color: @primaryColor;
   z-index: 100;
