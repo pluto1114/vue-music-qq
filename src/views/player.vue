@@ -20,7 +20,7 @@ import Lyric from '../components/Lyric';
 import Controls from '../components/Controls';
 
 import { mapState } from 'vuex';
-const base64DecodeUtils = require('base64-decode-utils');
+
 export default {
   data () {
     return {
