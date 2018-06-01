@@ -26,9 +26,9 @@ npm run dev
 # build for production with minification
 npm run build
 ```
-## Demo site(aliyun)
+## Demo site
 
-http://47.94.146.181/vue-music-qq
+http://weixin.nmict.cn/vue-music-qq/
 
 # Conatct
 
